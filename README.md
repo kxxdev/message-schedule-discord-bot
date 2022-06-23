@@ -6,6 +6,6 @@ Send a cyclically repeated message (once in a specified period, from a second to
 
 # Teams:  
 1) Creating messages  
-2)Editing messages  
+2) Editing messages  
 3) Deleting messages  
 4) List of all messages
