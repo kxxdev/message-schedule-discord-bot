@@ -32,7 +32,7 @@ module.exports = async (client) => {
         allGuildsMessages.forEach(async message => {
             const sendDateMsk = message.sendDate;
             if ((!message.sendCheck && isPast(sendDateMsk))
-                || (isPast(addMilliseconds(sendDateMsk, Number(message.timerTime))))) {
+                || (isPast(sendDateMsk, Number(message.timerTime)))) {
                 const guild = await client.guilds.cache.find(guild => guild.id === message.guildID);
                 if (!guild) {
                     return;

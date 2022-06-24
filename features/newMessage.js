@@ -15,19 +15,24 @@ const convertMsToDays = (milliseconds) => {
 };
 
 const convertDate = (date) => {
-    const offSet = moment.tz.zone("Europe/Moscow").utcOffset(date);
+
+    const offSetMsc = moment.tz.zone("Europe/Moscow").utcOffset(date);
+    const offSetServer = new Date().getTimezoneOffset();
+    const offSet = offSetServer - offSetMsc;
     date = addMinutes(date, offSet);
+
     const day = date.getDate();
     let month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+
     if (month < 10) {
         month = `0${month}`
     }
-    const year = date.getFullYear();
-    let hour = date.getHours();
     if (hour < 10) {
         hour = `0${hour}`
     }
-    let minute = date.getMinutes();
     if (minute < 10) {
         minute = `0${minute}`
     }

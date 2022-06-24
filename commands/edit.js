@@ -13,6 +13,32 @@ const convertMsToDays = (milliseconds) => {
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
 };
 
+const convertDate = (date) => {
+
+    const offSetMsc = moment.tz.zone("Europe/Moscow").utcOffset(date);
+    const offSetServer = new Date().getTimezoneOffset();
+    const offSet = offSetServer - offSetMsc;
+    date = addMinutes(date, offSet);
+
+    const day = date.getDate();
+    let month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+
+    if (month < 10) {
+        month = `0${month}`
+    }
+    if (hour < 10) {
+        hour = `0${hour}`
+    }
+    if (minute < 10) {
+        minute = `0${minute}`
+    }
+
+    return `${day}.${month}.${year} ${hour}:${minute}`;
+};
+
 module.exports = {
     name: 'edit',
     category: 'Edit message',
@@ -116,7 +142,7 @@ module.exports = {
                 new MessageEmbed()
                     .setColor(colorEmbed)
                     .setTitle('⬆ Ваше сообщение ⬆')
-                    .setDescription(`Оно будет отправлено в канал ${channel} \`${timerMessage.sendDate}\`\nИнтервал: \`${convertMsToDays(timerMessage.timerTime)}\``)
+                    .setDescription(`Оно будет отправлено в канал ${channel} \`${convertDate(timerMessage.sendDate)}\`\nИнтервал: \`${convertMsToDays(timerMessage.timerTime)}\``)
             ],
             components: [buttons1, buttons2, buttons3]
         }).catch(error => console.log(error));

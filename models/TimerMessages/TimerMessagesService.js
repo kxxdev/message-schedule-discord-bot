@@ -1,4 +1,5 @@
 const TimerMessages = require('./TimerMessages');
+const moment = require('moment-timezone');
 const NewMessagesController = require('../NewMessage/MessageNewController');
 
 function shorten(text, len) {
@@ -17,11 +18,27 @@ const convertMsToDays = (milliseconds) => {
 };
 
 const convertDate = (date) => {
+
+    const offSetMsc = moment.tz.zone("Europe/Moscow").utcOffset(date);
+    const offSetServer = new Date().getTimezoneOffset();
+    const offSet = offSetServer - offSetMsc;
+    date = addMinutes(date, offSet);
+
     const day = date.getDate();
-    const month = date.getMonth() + 1;
+    let month = date.getMonth() + 1;
     const year = date.getFullYear();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+
+    if (month < 10) {
+        month = `0${month}`
+    }
+    if (hour < 10) {
+        hour = `0${hour}`
+    }
+    if (minute < 10) {
+        minute = `0${minute}`
+    }
 
     return `${day}.${month}.${year} ${hour}:${minute}`;
 };
