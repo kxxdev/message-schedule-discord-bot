@@ -17,6 +17,6 @@ module.exports = {
                 .setColor(colorEmbed)
                 .setDescription(`Монетка упала: **« ${ran} »**`)
             ]
-        })
+        }).catch(error => console.log(error));
     }
 };

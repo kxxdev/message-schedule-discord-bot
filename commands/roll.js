@@ -34,6 +34,6 @@ module.exports = {
                 .setColor(colorEmbed)
                 .setDescription(`Случайное число: **${ran}**`)
             ]
-        })
+        }).catch(error => console.log(error));
     }
 };

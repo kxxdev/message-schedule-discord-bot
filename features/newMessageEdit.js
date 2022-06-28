@@ -92,3 +92,8 @@ module.exports = (client) => {
         }
     });
 };
+
+module.exports.config = {
+    displayName: 'editMessage',
+    dbName: 'editMessage'
+};
