@@ -47,6 +47,12 @@ class MessageNewService {
         return newMessage;
     }
 
+    async findAll({ guildID }) {
+        const newMessages = await NewMessages.find({ guildID });
+
+        return newMessages;
+    }
+
     async deleteNewMessage({ guildID, userID }) {
         await NewMessages.deleteOne({ guildID, userID });
 

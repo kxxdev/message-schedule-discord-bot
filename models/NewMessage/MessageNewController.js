@@ -27,6 +27,15 @@ class MessageNewController {
         }
     }
 
+    async findAll({ guildID }) {
+        try {
+            const newMessages = await MessageNewService.findAll({ guildID });
+            return newMessages;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async deleteNewMessage({ guildID, userID }) {
         try {
             const replyEmbed = await MessageNewService.deleteNewMessage({ guildID, userID });
