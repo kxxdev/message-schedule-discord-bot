@@ -6,7 +6,7 @@ module.exports = async (client) => {
         const newMessages = await NewMessageController.findAll();
 
         newMessages.forEach(newMessage => {
-            if (isPast(addMinutes(newMessage.commandDate, 60))) {
+            if (isPast(addMinutes(newMessage.commandDate, 1))) {
                 NewMessageController.deleteNewMessage({ guildID: newMessage.guildID, userID: newMessage.userID });
             }
         }).catch(error => console.log(error));

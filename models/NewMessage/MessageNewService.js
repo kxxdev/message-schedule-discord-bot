@@ -47,8 +47,8 @@ class MessageNewService {
         return newMessage;
     }
 
-    async findAll({ guildID }) {
-        const newMessages = await NewMessages.find({ guildID });
+    async findAll() {
+        const newMessages = await NewMessages.find();
 
         return newMessages;
     }

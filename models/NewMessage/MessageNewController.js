@@ -27,9 +27,9 @@ class MessageNewController {
         }
     }
 
-    async findAll({ guildID }) {
+    async findAll() {
         try {
-            const newMessages = await MessageNewService.findAll({ guildID });
+            const newMessages = await MessageNewService.findAll();
             return newMessages;
         } catch (error) {
             console.log(error);
