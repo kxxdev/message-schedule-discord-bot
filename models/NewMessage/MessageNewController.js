@@ -42,9 +42,9 @@ class MessageNewController {
         }
     }
 
-    async addStage({ guildID, userID, title, description, imageUrl, sendDate, timerTime, channelID, editStage, editMessageID }) {
+    async addStage({ guildID, userID, title, description, imageUrl, sendDate, timerTime, channelID, editStage, editMessageID, reactions }) {
         try {
-            await MessageNewService.addStage({ guildID, userID, title, description, imageUrl, sendDate, timerTime, channelID, editStage, editMessageID });
+            await MessageNewService.addStage({ guildID, userID, title, description, imageUrl, sendDate, timerTime, channelID, editStage, editMessageID, reactions });
             return false;
         } catch (error) {
             console.log(error);

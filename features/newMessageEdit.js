@@ -15,7 +15,7 @@ module.exports = (client) => {
         const guildID = interaction.message.guild.id;
         const userID = interaction.user.id;
         const newMessage = await MessageNewController.findNewMessage({ guildID, userID });
-        if (!newMessage || newMessage.stage < 7) {
+        if (!newMessage || newMessage.stage < 8) {
             return;
         }
         let messageAnswer;
@@ -42,9 +42,13 @@ module.exports = (client) => {
                 messageAnswer = ['Нужна картинка?', 'Отправьте изображение.\nДля пропуска изображения напишите: "нет".']
                 editStage = 4;
                 break;
+            case `reactions-${userID}`:
+                messageAnswer = ['Добавить реакции?', 'Пришлите смайлики одним сообщением разделяя их пробелом, для пропуска реакций отправьте любой текст.']
+                editStage = 5;
+                break;
             case `channel-${userID}`:
                 messageAnswer = ['Куда отправить сообщение?', `Отметьте канал в который должно отправляться сообщение.\nУчтите, что при удалении канала - сообщение с таймером остается, но не будет никуда отправлено.`]
-                editStage = 5;
+                editStage = 6;
                 break;
             case `accept-${userID}`:
                 const acceptEmbed = await TimerMessagesController.create({ guildID, userID });

@@ -60,6 +60,7 @@ class TimerMessagesService {
         const timerTime = newMessage.timerTime;
         const channelID = newMessage.channelID;
         const editMessageID = newMessage.editMessageID;
+        const reactions = newMessage.reactions;
 
         await TimerMessages.deleteOne({ guildID, messageID: editMessageID });
 
@@ -74,6 +75,7 @@ class TimerMessagesService {
             sendDate,
             timerTime,
             channelID,
+            reactions
         });
 
         await NewMessagesController.deleteNewMessage({ guildID, userID });

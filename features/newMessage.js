@@ -4,6 +4,8 @@ const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const { colorEmbed } = require('../config');
 const ms = require('ms');
 const { addMinutes, addHours } = require('date-fns');
+const emojiRegex = require('emoji-regex');
+const re = emojiRegex();
 
 const convertMsToDays = (milliseconds) => {
     const days = parseInt(milliseconds / (1000 * 60 * 60 * 24));
@@ -60,6 +62,23 @@ module.exports = (client) => {
             return;
         }
 
+        const getEmoji = async (argument) => {
+            const subStr = argument.substring(
+                argument.indexOf(':') + 1,
+                argument.lastIndexOf('>')
+            );
+            const emojiID = subStr.substring(
+                subStr.indexOf(':') + 1
+            );
+
+            const emoji = await message.guild.emojis.cache.find(emoji => emoji.id === emojiID);
+            if (emoji) {
+                return argument;
+            }
+
+            return null;
+        };
+
         const sendEndMessage = async () => {
             const buttons1 = new MessageActionRow()
                 .addComponents(
@@ -97,6 +116,11 @@ module.exports = (client) => {
                         .setEmoji('🌄')
                         .setLabel('Изображение')
                         .setStyle('PRIMARY'),
+                    new MessageButton()
+                        .setCustomId(`reactions-${userID}`)
+                        .setEmoji('👍')
+                        .setLabel('Реакции')
+                        .setStyle('PRIMARY'),
                 );
 
             const buttons3 = new MessageActionRow()
@@ -114,6 +138,7 @@ module.exports = (client) => {
                 );
 
             const createdNewMessage = await MessageNewController.findNewMessage({ guildID, userID })
+            const reactions = createdNewMessage.reactions;
             const newMessageEmbed = new MessageEmbed().setColor(colorEmbed);
             const channel = message.guild.channels.cache.find(channel => channel.id === createdNewMessage.channelID);
             if (createdNewMessage.title != `none`) {
@@ -132,7 +157,7 @@ module.exports = (client) => {
                     new MessageEmbed()
                         .setColor(colorEmbed)
                         .setTitle('⬆ Ваше сообщение ⬆')
-                        .setDescription(`Оно будет отправлено в канал ${channel} \`${convertDate(createdNewMessage.sendDate)}\`\nИнтервал: \`${convertMsToDays(messageNew.timerTime)}\``)
+                        .setDescription(`Оно будет отправлено в канал ${channel} \`${convertDate(createdNewMessage.sendDate)}\`\nИнтервал: \`${convertMsToDays(messageNew.timerTime)}\`\nРеакции: ${reactions.join(', ')}`)
                 ],
                 components: [buttons1, buttons2, buttons3]
             }).catch(error => console.log(error));
@@ -336,9 +361,30 @@ module.exports = (client) => {
                     return
                 }
 
-                messageAnswer = ['Куда отправить сообщение?', `Отметьте канал в который должно отправляться сообщение. Например: ${message.channel}\nУчтите, что при удалении канала - сообщение с таймером остается, но не будет никуда отправлено.`]
+                messageAnswer = ['Добавить реакции?', 'Пришлите смайлики одним сообщением разделяя их пробелом, для пропуска реакций отправьте любой текст.']
                 break;
             case 5:
+                const reactions = [];
+
+                for (const arg of args) {
+                    const match = re.exec(arg) || await getEmoji(arg);
+                    if (match != null) {
+                        reactions.push(arg);
+                    }
+                }
+
+                addStageCheck = await MessageNewController.addStage({ guildID, userID, reactions });
+                if (addStageCheck) {
+                    message.reply({
+                        embeds: [addStageCheck]
+                    }).catch(error => console.log(error));
+
+                    return;
+                }
+
+                messageAnswer = ['Куда отправить сообщение?', `Отметьте канал в который должно отправляться сообщение. Например: ${message.channel}\nУчтите, что при удалении канала - сообщение с таймером остается, но не будет никуда отправлено.`]
+                break;
+            case 6:
                 const channel = message.mentions.channels.first();
                 if (!channel) {
                     message.reply({

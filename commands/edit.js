@@ -159,7 +159,7 @@ module.exports = {
             timerTime: timerMessage.timerTime,
             channelID: timerMessage.channelID,
             editMessageID: timerMessage.messageID,
-            editStage: 7
+            editStage: 8
         });
         if (addStageCheck) {
             message.reply({

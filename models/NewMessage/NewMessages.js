@@ -14,6 +14,7 @@ const Schema = mongoose.Schema({
     commandDate: { type: Date },
     editStage: { type: Number },
     editMessageID: { type: String },
+    reactions: [{ type: String }]
 })
 
 module.exports = mongoose.model('new-messages', Schema)

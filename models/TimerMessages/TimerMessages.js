@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema({
     messageID: { type: String },
-    guildID: { type: String }, 
+    guildID: { type: String },
     userID: { type: String, },
     sendCheck: { type: Boolean },
     title: { type: String },
@@ -10,7 +10,8 @@ const Schema = mongoose.Schema({
     imageUrl: { type: String },
     sendDate: { type: Date },
     timerTime: { type: String },
-    channelID: { type: String }
+    channelID: { type: String },
+    reactions: [{ type: String }]
 })
 
 module.exports = mongoose.model('timer-messages', Schema)

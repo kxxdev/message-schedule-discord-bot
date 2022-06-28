@@ -55,7 +55,7 @@ class MessageNewService {
             .setDescription(`Вы отменили создание сообщения.`)
     }
 
-    async addStage({ guildID, userID, title, description, imageUrl, sendDate, timerTime, channelID, editStage, editMessageID }) {
+    async addStage({ guildID, userID, title, description, imageUrl, sendDate, timerTime, channelID, editStage, editMessageID, reactions }) {
         const newMessage = await this.findNewMessage({ guildID, userID });
 
         let stage = ++newMessage.stage;
@@ -64,12 +64,12 @@ class MessageNewService {
             stage = editStage;
         }
         else if (newMessage.editStage >= 0) {
-            stage = 7;
+            stage = 8;
             editStage = -1;
         }
         const commandDate = new Date();
 
-        await NewMessages.updateOne({ guildID, userID }, { title, description, imageUrl, sendDate, timerTime, channelID, stage, commandDate, editStage, editMessageID });
+        await NewMessages.updateOne({ guildID, userID }, { title, description, imageUrl, sendDate, timerTime, channelID, stage, commandDate, editStage, editMessageID, reactions });
     }
 }
 

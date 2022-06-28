@@ -19,10 +19,16 @@ const createEmbed = (message) => {
     return embed;
 };
 
-const sendMessage = (channel, embed) => {
+const sendMessage = (channel, embed, reactions) => {
     channel.send({
         embeds: [embed]
-    }).catch(error => console.log(error));
+    })
+        .then((message) => {
+            for (let i = 0; i < reactions.length; i++) {
+                message.react(reactions[i]).catch(error => console.log(error));
+            }
+        })
+        .catch(error => console.log(error));
 }
 
 module.exports = async (client) => {
@@ -41,7 +47,8 @@ module.exports = async (client) => {
                 if (!channel) {
                     return;
                 }
-                sendMessage(channel, createEmbed(message));
+                const reactions = message.reactions || []
+                sendMessage(channel, createEmbed(message), reactions);
 
                 if (message.timerTime == '0') {
                     await TimerMessagesController.deleteOne({ guildID: message.guildID, messageID: message.messageID });
