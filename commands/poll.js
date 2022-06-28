@@ -56,15 +56,17 @@ module.exports = {
         const variants = [];
         const reactions = [];
 
-        options.forEach(option => {
-            variants.push(options.value);
-        });
+        for (let i = 0; i < options.length; i++) {
+            variants.push(`${emojis[i]}) ${options[i].value}`);
+        }
 
-        interaction.reply({
+        interaction.channel.send({
             embeds: [new MessageEmbed()
+                .setTitle('Голосование')
                 .setColor(colorEmbed)
-                .setDescription(question)
-            ]
+                .setDescription(`${question}\n${variants.join('\n')}`)
+            ],
+            ephemeral: true
         })
             .then((message) => {
                 for (let i = 0; i < options.length; i++) {
@@ -72,5 +74,13 @@ module.exports = {
                 }
             })
             .catch(error => console.log(error));
+
+        interaction.reply({
+            embeds: [new MessageEmbed()
+                .setColor(colorEmbed)
+                .setDescription('Голосование создано!')
+            ],
+            ephemeral: true
+        }).catch(error => console.log(error));
     }
 };
