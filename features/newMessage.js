@@ -4,8 +4,8 @@ const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const { colorEmbed } = require('../config');
 const ms = require('ms');
 const { addMinutes, addHours } = require('date-fns');
-const emojiRegex = require('emoji-regex');
-const re = emojiRegex();
+
+const pattern = /\p{Emoji}/u;
 
 const convertMsToDays = (milliseconds) => {
     const days = parseInt(milliseconds / (1000 * 60 * 60 * 24));
@@ -367,7 +367,7 @@ module.exports = (client) => {
                 const reactions = [];
 
                 for (const arg of args) {
-                    const match = re.exec(arg) || await getEmoji(arg);
+                    const match = pattern.test(arg) || await getEmoji(arg);
                     if (match != null) {
                         reactions.push(arg);
                     }
@@ -380,6 +380,11 @@ module.exports = (client) => {
                     }).catch(error => console.log(error));
 
                     return;
+                }
+
+                if (messageNew.editStage >= 0) {
+                    await sendEndMessage();
+                    return
                 }
 
                 messageAnswer = ['Куда отправить сообщение?', `Отметьте канал в который должно отправляться сообщение. Например: ${message.channel}\nУчтите, что при удалении канала - сообщение с таймером остается, но не будет никуда отправлено.`]

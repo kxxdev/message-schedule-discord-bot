@@ -1,6 +1,5 @@
 const TimerMessagesController = require('../models/TimerMessages/TimerMessagesController');
-const moment = require('moment-timezone');
-const { isPast, addMilliseconds, addHours } = require('date-fns');
+const { isPast, addMilliseconds } = require('date-fns');
 const { MessageEmbed } = require('discord.js');
 const { colorEmbed } = require('../config');
 
