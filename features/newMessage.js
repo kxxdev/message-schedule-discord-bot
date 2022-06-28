@@ -309,7 +309,7 @@ module.exports = (client) => {
                 break;
             case 4:
                 const file = message.attachments.first()
-                const imageUrl = message.content?.toLowerCase() === 'нет' ? 'none' : file.url;
+                const imageUrl = message.content?.toLowerCase() === 'нет' ? 'none' : file?.url || undefined;
                 if (!imageUrl) {
                     message.reply({
                         embeds: [new MessageEmbed()

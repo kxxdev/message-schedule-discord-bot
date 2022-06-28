@@ -1,5 +1,6 @@
 const { permission } = require('../permissons');
 const { colorEmbed } = require('../config');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
     name: 'help',
