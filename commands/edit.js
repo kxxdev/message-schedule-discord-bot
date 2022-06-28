@@ -1,6 +1,8 @@
 const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const { permission } = require('../permissons');
 const { colorEmbed } = require('../config');
+const moment = require('moment-timezone');
+const { addMinutes } = require('date-fns');
 const TimerMessagesController = require('../models/TimerMessages/TimerMessagesController');
 const MessageNewController = require('../models/NewMessage/MessageNewController');
 
@@ -109,6 +111,11 @@ module.exports = {
                     .setEmoji('🌄')
                     .setLabel('Изображение')
                     .setStyle('PRIMARY'),
+                new MessageButton()
+                    .setCustomId(`reactions-${userID}`)
+                    .setEmoji('👍')
+                    .setLabel('Реакции')
+                    .setStyle('PRIMARY'),
             );
 
         const buttons3 = new MessageActionRow()
@@ -125,6 +132,7 @@ module.exports = {
                     .setStyle('DANGER'),
             );
 
+        const reactions = timerMessage.reactions;
         const newMessageEmbed = new MessageEmbed().setColor(colorEmbed);
         const channel = message.guild.channels.cache.find(channel => channel.id === timerMessage.channelID);
         if (timerMessage.title != `none`) {
@@ -143,7 +151,7 @@ module.exports = {
                 new MessageEmbed()
                     .setColor(colorEmbed)
                     .setTitle('⬆ Ваше сообщение ⬆')
-                    .setDescription(`Оно будет отправлено в канал ${channel} \`${convertDate(timerMessage.sendDate)}\`\nИнтервал: \`${convertMsToDays(timerMessage.timerTime)}\``)
+                    .setDescription(`Оно будет отправлено в канал ${channel} \`${convertDate(timerMessage.sendDate)}\`\nИнтервал: \`${convertMsToDays(timerMessage.timerTime)}\`\nРеакции: ${reactions.join(', ')}`)
             ],
             components: [buttons1, buttons2, buttons3]
         }).catch(error => console.log(error));
