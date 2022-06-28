@@ -17,6 +17,7 @@ client.on('ready', () => {
     new WOKCommands(client, {
         commandsDir: path.join(__dirname, 'commands'),
         featuresDir: path.join(__dirname, 'features'),
+        botOwners: ['259366722597814272', '926818121577267271'],
         disabledDefaultCommands: [
             'help',
             'command',

@@ -9,6 +9,7 @@ const re = emojiRegex();
 module.exports = {
     name: 'test',
     category: 'Test message',
+    ownerOnly: true,
     description: 'Test messages',
     callback: async ({ message, member, args, guild }) => {
         if (!member.permissions.has(permission)) {

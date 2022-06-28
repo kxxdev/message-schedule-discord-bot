@@ -5,6 +5,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
     name: 'help',
     category: 'help message',
+    ownerOnly: true,
     description: 'help messages',
     callback: async ({ message, member, args, guild }) => {
         if (!member.permissions.has(permission)) {

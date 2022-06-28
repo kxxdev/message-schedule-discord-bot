@@ -6,7 +6,7 @@ const { colorEmbed } = require('../config');
 module.exports = {
     name: 'yesornot',
     category: 'Голосования',
-    permissions: permission,
+    ownerOnly: true,
     description: 'Создание быстрого голосования с двумя вариантами ответа.',
     slash: true,
     options: [

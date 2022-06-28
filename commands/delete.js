@@ -6,6 +6,7 @@ module.exports = {
     name: 'delete',
     category: 'Delete message',
     description: 'Delete messages',
+    ownerOnly: true,
     callback: async ({ message, member, args, guild }) => {
         if (!member.permissions.has(permission)) {
             message.reply({

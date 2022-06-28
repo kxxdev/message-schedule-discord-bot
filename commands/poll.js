@@ -8,7 +8,7 @@ const emojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣'];
 module.exports = {
     name: 'poll',
     category: 'Голосования',
-    permissions: permission,
+    ownerOnly: true,
     description: 'Создание быстрого голосования с вариантами ответа.',
     slash: true,
     options: [

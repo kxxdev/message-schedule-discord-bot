@@ -7,6 +7,7 @@ const TimerMessagesController = require('../models/TimerMessages/TimerMessagesCo
 module.exports = {
     name: 'list',
     category: 'List messages',
+    ownerOnly: true,
     description: 'List messages',
     callback: async ({ message, member, channel, guild }) => {
         if (!member.permissions.has(permission)) {

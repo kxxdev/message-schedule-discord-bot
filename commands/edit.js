@@ -42,6 +42,7 @@ const convertDate = (date) => {
 module.exports = {
     name: 'edit',
     category: 'Edit message',
+    ownerOnly: true,
     description: 'Edit messages',
     callback: async ({ message, member, args, guild }) => {
         if (!member.permissions.has(permission)) {

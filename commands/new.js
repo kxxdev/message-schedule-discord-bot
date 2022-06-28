@@ -6,6 +6,7 @@ const { start, findNewMessage } = require('../models/NewMessage/MessageNewContro
 module.exports = {
     name: 'new',
     category: 'Create message',
+    ownerOnly: true,
     description: 'Create messages',
     callback: async ({ guild, message, member, channel }) => {
         if (!member.permissions.has(permission)) {
