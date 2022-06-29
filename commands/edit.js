@@ -132,7 +132,7 @@ module.exports = {
                     .setStyle('DANGER'),
             );
 
-        const reactions = timerMessage.reactions;
+        const reactions = timerMessage?.reactions || [];
         const newMessageEmbed = new MessageEmbed().setColor(colorEmbed);
         const channel = message.guild.channels.cache.find(channel => channel.id === timerMessage.channelID);
         if (timerMessage.title != `none`) {
@@ -168,6 +168,7 @@ module.exports = {
             timerTime: timerMessage.timerTime,
             channelID: timerMessage.channelID,
             editMessageID: timerMessage.messageID,
+            reactions,
             editStage: 8
         });
         if (addStageCheck) {
