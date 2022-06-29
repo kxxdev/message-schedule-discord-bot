@@ -20,7 +20,7 @@ module.exports = {
     callback: async ({ interaction }) => {
         const param = interaction?.options?._hoistedOptions?.find(option => option.type === 'STRING')?.value || 'NaN';
 
-        interaction.reply({
+        interaction.channel.send({
             embeds: [new MessageEmbed()
                 .setColor(colorEmbed)
                 .setDescription(param)
@@ -31,5 +31,13 @@ module.exports = {
                 message.react('👎');
             })
             .catch(error => console.log(error));
+
+        interaction.reply({
+            embeds: [new MessageEmbed()
+                .setColor(colorEmbed)
+                .setDescription('Голосование создано!')
+            ],
+            ephemeral: true
+        }).catch(error => console.log(error));
     }
 };
